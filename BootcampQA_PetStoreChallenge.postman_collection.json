@@ -1,0 +1,182 @@
+{
+	"info": {
+		"_postman_id": "e11b8df0-22f8-4709-9cca-6f67cc2378d9",
+		"name": "BootcampQA_PetStoreChallenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18302018"
+	},
+	"item": [
+		{
+			"name": "Post a Pet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Pet was created\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.name).to.eql(\"Zeus\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 147852,\r\n  \"category\": {\r\n    \"id\": 2,\r\n    \"name\": \"perro\"\r\n  },\r\n  \"name\": \"Zeus\",\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 242,\r\n      \"name\": \"Fila Brasileiro\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/pet",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a Pet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Getting the expected pet\", function () {\r",
+							"    pm.expect(pm.response.json().id).to.eql(147852);\r",
+							"    pm.expect(pm.response.json().name).to.eql(\"Zeus\");\r",
+							"    pm.expect(pm.response.json().category.id).to.eql(2);\r",
+							"    pm.expect(pm.response.json().category.name).to.eql(\"perro\");\r",
+							"    pm.expect(pm.response.json().tags[0].id).to.eql(242);\r",
+							"    pm.expect(pm.response.json().tags[0].name).to.eql(\"Fila Brasileiro\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/pet/147852",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"pet",
+						"147852"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Place Order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify ID\", function(){\r",
+							"    pm.expect(pm.response.json().id).to.eql(25462);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify status\", function(){\r",
+							"    pm.expect(pm.response.json().status).to.eql(\"on hold\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 25462,\r\n  \"petId\": 147852,\r\n  \"quantity\": 1,\r\n  \"status\": \"on hold\",\r\n  \"complete\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/store/order",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"store",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Getting the expected order\", function () {\r",
+							"    pm.expect(pm.response.json().id).to.eql(25462);\r",
+							"    pm.expect(pm.response.json().petId).to.eql(147852);\r",
+							"    pm.expect(pm.response.json().status).to.eql(\"on hold\");\r",
+							"    pm.expect(pm.response.json().complete).to.eql(true);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/store/order/25462",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"store",
+						"order",
+						"25462"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
